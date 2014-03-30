@@ -13,8 +13,11 @@ require 'RedBean/rb.phar';
 \Slim\Slim::registerAutoloader();
 
 // set up database connection
-R::setup('mysql:host=localhost;dbname=appdata','user','pass');
-R::freeze(true);
+R::setup('mysql:host=localhost;dbname=presenze','root','amanita');
+//R::freeze(true);
+//$b = R::dispense( 'courses' );
+//$b->name = 'sismica';
+//$id = R::store( $b );
 
 /**
  * Step 2: Instantiate a Slim application
@@ -58,13 +61,13 @@ function validateUserKey($uid, $key) {
 // handle GET requests for /articles
 $app->get('/courses', 'authenticate', function () use ($app) {  
   // query database for all articles
-  $articles = R::find('articles'); 
+  $courses = R::find('courses'); 
   
   // send response header for JSON content type
   $app->response()->header('Content-Type', 'application/json');
   
   // return JSON-encoded response body with query results
-  echo json_encode(R::exportAll($articles));
+  echo json_encode(R::exportAll($courses));
 });
 
 // generates a temporary API key using cookies
